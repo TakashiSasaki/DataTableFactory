@@ -1,9 +1,18 @@
-function factory_(values){
-  this.values = values;
+function factory_(valuesOrObject){
+  if(valuesOrObject instanceof Array){
+    this.values = valuesOrObject;
+    this.object = undefined;
+  } else if(values instanceof Object) {
+    this.object = valuesOrObject;
+    this.values = undefined;
+  } else {
+    throw "factory: expects array of array or object.";
+  }
   this.widths = widths_;
   this.maxWidths = maxWidths_;
   this.header = header_;
-  this.getObject = getObject_;
+  this.asObject = asObject_;
+  this.toObject = toObject_;
 }
 
 function widths_(){
@@ -24,11 +33,11 @@ function header_(){
   return this.values[0];
 }
 
-function getObject_(){
-  var result = {"":{}};
+function toObject_(){
+  this.object = {"":{}};
   var header = this.header();
   for(var i=1; i<this.values.length; ++i){
-    var o = result;
+    var o = this.object;
     var p = "";
 
     for(var j=0; j<header.length; ++j) {
@@ -56,8 +65,15 @@ function getObject_(){
     }
     o[p].push(q);
   }//for
-  return result[""];
-}//getObject
+  return this.object[""];
+}//toObject
+
+function asObject_(){
+  if(typeof this.object === typeof undefined) {
+    this.toObject();
+  }
+  return this.object[""];
+}
 
 /**
  @param {any[][]} values
