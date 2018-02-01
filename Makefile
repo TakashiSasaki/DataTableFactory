@@ -4,9 +4,8 @@ clone:
 	clasp clone 1NlWsEesXTa9Id-UI_ZGtrMnJgdNxtos8YPBUg5EEyrv78KMNqZQ8hyVw
 
 test: wget
-	node test.js
+	make -C test test
 
 wget:
-	make -C test
-
+	make -C test wget
 
