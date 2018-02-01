@@ -25,33 +25,39 @@ function header_(){
 }
 
 function getObject_(){
-  var result = {};
+  var result = {"":{}};
   var header = this.header();
   for(var i=1; i<this.values.length; ++i){
     var o = result;
+    var p = "";
 
     for(var j=0; j<header.length; ++j) {
       if(header[j].length > 0) break;
-      if(typeof o[this.values[i][j]] === "undefined") {
-        o[this.values[i][j]] = {};
+      o = o[p];
+      p = this.values[i][j];
+      if(typeof o[p] === "undefined") {
+        o[p] = {};
       }
-      o = o[this.values[i][j]];
     }
 
-    if(typeof o[i] === "undefined"){
-      o[i] = {};
-    }
+    if(!(o[p] instanceof Array)) o[p]=[];
 
+    var q = {};
     for(;j<header.length; ++j) {
-      if(header[j].length === 0) break;
-      if(typeof o[i][header[j]] !== "undefined") 
-        throw "getObject: duplicate header " + header[j];
-      o[i][header[j]] = this.values[i][j];
+      if(typeof q[header[j]] === "undefined")
+        q[header[j]] = [];
+      q[header[j]].push(this.values[i][j]);
     }
-  }//for
-  return o;
-}//getObject
 
+    for(;j<this.values[i].length; ++j) {
+      if(typeof q[""] === "undefined") 
+        q[""] = [];
+      q[""].push(this.values[i][j]);
+    }
+    o[p].push(q);
+  }//for
+  return result[""];
+}//getObject
 
 /**
  @param {any[][]} values

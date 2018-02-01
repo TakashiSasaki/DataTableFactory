@@ -13,6 +13,12 @@ CsvParser.csvDocument("abc");
 fs.readFile("./test1.csv", "utf8", function(err, data){
   var values = CsvParser.csvDocument(data);
   var dataTable = DataTable.create(values);
-  console.log(dataTable.getObject());
+  console.log(JSON.stringify(dataTable.getObject(), undefined, 2));
+});
+
+fs.readFile("./test2.csv", "utf8", function(err, data) {
+  var values = CsvParser.csvDocument(data);
+  var dataTable = DataTable.create(values);
+  console.log(JSON.stringify(dataTable.getObject(), undefined, 2));
 });
 
