@@ -1,13 +1,18 @@
 "use strict";
 var fs = require("fs");
 var CsvParser = require("../../csvParser/CsvParser.js");
-var dataTable = require("../create.gs").create([["a","b","c"],[1],[2,2],[3,3,3]]);
-console.log(dataTable.widths());
-console.log(dataTable.header());
-console.log(dataTable.getObject());
+var DataTable = require("../DataTable.js");
+
+var values1 = [["a","b","c"],[1],[2,2],[3,3,3]];
+var dataTable1 = DataTable.create(values1);
+console.log(dataTable1.widths());
+console.log(dataTable1.header());
+console.log(dataTable1.getObject());
+
 CsvParser.csvDocument("abc");
 fs.readFile("./test1.csv", "utf8", function(err, data){
-  var a = CsvParser.csvDocument(data);
-  console.log(a);
+  var values = CsvParser.csvDocument(data);
+  var dataTable = DataTable.create(values);
+  console.log(dataTable.getObject());
 });
 
