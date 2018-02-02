@@ -1,4 +1,4 @@
-function asObject_(){
+function getAsObject_(){
   var tmp = {"":{}};
   for(var i=0; i<this.hierValues.length; ++i){
     var o = tmp;
@@ -31,8 +31,9 @@ function asObject_(){
     }
     o[p].push(q);
   }//for
-  return tmp[""];
-}//asObject
+  this.object = tmp[""];
+  return this.object;
+}//toObject
 
-exports.asObject_ = asObject_;
+exports.getAsObject_ = getAsObject_;
 

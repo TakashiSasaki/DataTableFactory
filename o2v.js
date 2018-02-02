@@ -1,22 +1,27 @@
-function toValues_(){
+function getAsValues_(){
   if(typeof this.object !== typeof {}) throw "toValues: no object";
   this.hierHeader = [];
   this.hierValues= [];
   this.leafHeader = [];
   this.leafValues = [];
-  this.a([], this.object);
+  a_.call(this, [], this.object);
+  var values = [this.hierHeader.concat(this.leafHeader)];
+  for(var i=0; i<this.hierValues.length; ++i) {
+    values.push(this.hierValues[i].concat(this.leafValues[i]));
+  }
+  return values;
 }
 
 function a_(path, o){
   console.log("a_: path = " + path);
   console.log("a_: o = " + o);
   if(o instanceof Array) {
-    this.b(path.concat(), o);
+    b_.call(this, path.concat(), o);
   } else {
     if(!(o instanceof Object)) throw "a: o is not an instance of Object.";
     this.hierHeader.push("");
     for(var i in o) {
-      this.a(path.concat([i]), o[i]);
+      a_.call(this, path.concat([i]), o[i]);
     }//for
   }//if 
 }//function a_
@@ -42,7 +47,7 @@ function b_(path, leafObjects) {
       if(!(leafObjects[i][j] instanceof Array)) 
         throw "b: leafObjects[i][j] is not an instance of Array.";
       if(leafObjects[i][j].length === 0) {
-        var indices = this.headerIndices(j);
+        var indices = headerIndices_.call(this, j);
         if(indices.length === 0) {
           this.leafHeader.push(j);
         }
@@ -50,7 +55,7 @@ function b_(path, leafObjects) {
         this.leafValues.push(row);
       } else {
         for(var k=0; k<leafObjects[i][j].length; ++k) {
-          var indices = this.headerIndices(j);
+          var indices = headerIndices_.call(this, j);
           if(k<indices.length){
             row[indices[k]] = leafObjects[i][j][k];
           } else {
@@ -73,18 +78,5 @@ function headerIndices_(name){
   return indices;
 }
 
-function asValues_(){
-  this.toValues();
-  var values = [this.hierHeader.concat(this.leafHeader)];
-  for(var i=0; i<this.hierValues.length; ++i) {
-    values.push(this.hierValues[i].concat(this.leafValues[i]));
-  }
-  return values;
-}
-
-exports.toValues_ = toValues_;
-exports.asValues_ = asValues_;
-exports.headerIndices_ = headerIndices_;
-exports.a_        = a_;
-exports.b_        = b_;
+exports.getAsValues_ = getAsValues_;
 
