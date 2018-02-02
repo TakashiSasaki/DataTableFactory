@@ -13,12 +13,14 @@ CsvParser.csvDocument("abc");
 fs.readFile("./test1.csv", "utf8", function(err, data){
   var values = CsvParser.csvDocument(data);
   var dataTable = DataTable.create(values);
-  console.log(JSON.stringify(dataTable.asObject(), undefined, 2));
+  //console.log(JSON.stringify(dataTable.asObject(), undefined));
 });
 
 fs.readFile("./test2.csv", "utf8", function(err, data) {
   var values = CsvParser.csvDocument(data);
   var dataTable = DataTable.create(values);
-  console.log(JSON.stringify(dataTable.asObject(), undefined, 2));
+  //console.log(JSON.stringify(dataTable.asObject(), undefined));
 });
 
+var dataTable2 = DataTable.create({"a":[{"b":[1,2]}]});
+console.log(dataTable2.asValues());

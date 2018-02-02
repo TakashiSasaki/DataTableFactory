@@ -2,7 +2,7 @@ function factory_(valuesOrObject){
   if(valuesOrObject instanceof Array){
     this.values = valuesOrObject;
     this.object = undefined;
-  } else if(values instanceof Object) {
+  } else if(valuesOrObject instanceof Object) {
     this.object = valuesOrObject;
     this.values = undefined;
   } else {
@@ -13,6 +13,11 @@ function factory_(valuesOrObject){
   this.header = header_;
   this.asObject = asObject_;
   this.toObject = toObject_;
+  this.toValues = toValues_;
+  this.asValues = asValues_;
+  this.headerIndices = headerIndices_;
+  this.a = a_;
+  this.b = b_;
 }
 
 function widths_(){
@@ -34,6 +39,7 @@ function header_(){
 }
 
 function toObject_(){
+  if(typeof this.values === typeof undefined) throw "toObject: no values";
   this.object = {"":{}};
   var header = this.header();
   for(var i=1; i<this.values.length; ++i){
@@ -73,6 +79,82 @@ function asObject_(){
     this.toObject();
   }
   return this.object[""];
+}
+
+function toValues_(){
+  if(typeof this.object === typeof undefined) throw "toValues: no object";
+  this.values = [[]];
+  this.a([], this.object);
+}
+
+function a_(path, o){
+  console.log(path);
+  console.log(o);
+  if(o instanceof Array) {
+    this.b(path, o);
+  } else {
+    if(!(o instanceof Object)) throw "a: o is not an instance of Object.";
+    this.values[0].push("");
+    for(var i in o) {
+      path.push(i);
+      this.a(path, o[i]);
+    }//for
+  }//if 
+}//function a_
+
+function b_(path, leafObjects) {
+  if(!(leafObjects instanceof Array)) 
+    throw "b: leafObjects is not an instance of Array.";
+  for(var i=0; i<leafObjects.length; ++i) {
+    var row = path.concat();
+    if(leafObjects[i] === null) throw "b: leafObjects[i] is null.";
+    if(leafObjects[i] instanceof Array) 
+      throw "b: leafObjects[i] is an instance of Array."; 
+    if(!leafObjects[i] instanceof Object) 
+      throw "b: leafObjects[i] is not an instance of Object.";
+    if(Object.keys(leafObjects[i]).length === 0) {
+      this.values.push(row);
+      continue;
+    }
+    for(var j in leafObjects[i]){
+      if(leafObjects[i][j] === null) throw "b: leafObjects[i][j] is null.";
+      if(!(leafObjects[i][j] instanceof Array)) 
+        throw "b: leafObjects[i][j] is not an instance of Array.";
+      if(leafObjects[i][j].length === 0) {
+        var indices = this.headerIndices(j);
+        if(indices.length === 0) {
+          this.values[0].push(j);
+        }
+        this.values.push(row);
+      } else {
+        for(var k=0; k<leafObjects[i][j].length; ++k) {
+          var indices = this.headerIndices(j);
+          if(k<indices.length){
+            row[indices[k]] = leafObjects[i][j][k];
+          } else {
+            this.values[0].push(j);
+            row[this.values[0].length-1] = leafObjects[i][j][k];
+          }
+        }//for k
+      }//if
+      this.values.push(row);
+    }//for j
+  }//for i
+}//function b
+
+function headerIndices_(name){
+  var indices = [];
+  for(var i=0; i<this.values[0].length; ++i) {
+    if(this.values[0][i] === name) indices.push(i)
+  }
+  return indices;
+}
+
+function asValues_(){
+  if(typeof this.values === typeof undefined){
+    this.toValues();
+  }
+  return this.values;
 }
 
 /**
