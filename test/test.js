@@ -22,5 +22,7 @@ fs.readFile("./test2.csv", "utf8", function(err, data) {
   //console.log(JSON.stringify(dataTable.asObject(), undefined));
 });
 
-var dataTable2 = DataTable.create({"a":[{"b":[1,2]}]});
-console.log(dataTable2.asValues());
+var object1Json = fs.readFileSync("object1.json", "utf8");
+var object1 = JSON.parse(object1Json);
+var object1DataTable = DataTable.create(object1);
+console.log(object1DataTable.asValues());

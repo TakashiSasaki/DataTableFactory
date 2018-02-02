@@ -88,16 +88,15 @@ function toValues_(){
 }
 
 function a_(path, o){
-  console.log(path);
-  console.log(o);
+  console.log("a_: path = " + path);
+  console.log("a_: o = " + o);
   if(o instanceof Array) {
-    this.b(path, o);
+    this.b(path.concat(), o);
   } else {
     if(!(o instanceof Object)) throw "a: o is not an instance of Object.";
     this.values[0].push("");
     for(var i in o) {
-      path.push(i);
-      this.a(path, o[i]);
+      this.a(path.concat([i]), o[i]);
     }//for
   }//if 
 }//function a_
@@ -117,6 +116,7 @@ function b_(path, leafObjects) {
       continue;
     }
     for(var j in leafObjects[i]){
+      console.log("b_: leafObjects[i][j] = " + leafObjects[i][j]);
       if(leafObjects[i][j] === null) throw "b: leafObjects[i][j] is null.";
       if(!(leafObjects[i][j] instanceof Array)) 
         throw "b: leafObjects[i][j] is not an instance of Array.";
