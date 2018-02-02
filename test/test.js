@@ -9,17 +9,20 @@ dataTable1.fromValues(values1);
 console.log(dataTable1.asObject());
 
 CsvParser.csvDocument("abc");
-fs.readFile("./test1.csv", "utf8", function(err, data){
-  var values = CsvParser.csvDocument(data);
-  var dataTable = DataTable.create(values);
-  console.log(JSON.stringify(dataTable.asObject(), undefined));
-});
+var csv1 = fs.readFileSync("./test1.csv", "utf8");
+var csv1Values = CsvParser.csvDocument(csv1);
+var csv1DataTable = DataTable.create(csv1Values);
+var csv1Json = JSON.stringify(csv1DataTable.asObject());
+console.log(csv1Json);
 
-fs.readFile("./test2.csv", "utf8", function(err, data) {
-  var values = CsvParser.csvDocument(data);
-  var dataTable = DataTable.create(values);
-  console.log(JSON.stringify(dataTable.asObject(), undefined));
-});
+var csv2 = fs.readFileSync("./test2.csv", "utf8");
+var csv2Values = CsvParser.csvDocument(csv2);
+var csv2DataTable = DataTable.create(csv2Values);
+var csv2Object = csv2DataTable.asObject();
+var csv2Json = JSON.stringify(csv2Object);
+console.log(csv2Json);
+var csv2Values2 = csv2DataTable.asValues();
+//console.log(csv2Values2);
 
 var object1Json = fs.readFileSync("object1.json", "utf8");
 var object1 = JSON.parse(object1Json);
