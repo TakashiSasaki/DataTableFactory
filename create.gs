@@ -3,18 +3,6 @@ function factory_(valuesOrObject){
   this.hierHeader = undefined;
   this.leafValues = undefined;
   this.leafHeader = undefined;
-//  if(valuesOrObject instanceof Array){
-//    this.values = valuesOrObject;
-//    this.object = undefined;
-//  } else if(valuesOrObject instanceof Object) {
-//    this.object = valuesOrObject;
-//    this.values = undefined;
-//  } else {
-//    throw "factory: expects array of array or object.";
-//  }
- // this.widths         = require("./misc.js").widths_;
- // this.maxWidths      = require("./misc.js").maxWidths_;
- // this.header         = require("./misc.js").header_;
   this.asObject       = require("./v2o.js").asObject_;
   this.toObject       = require("./v2o.js").toObject_;
   this.toValues       = require("./o2v.js").toValues_;
