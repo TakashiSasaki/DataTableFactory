@@ -21,7 +21,7 @@ var csv2DataTable = DataTable.create(csv2Values);
 var csv2Object = csv2DataTable.asObject();
 var csv2Json = JSON.stringify(csv2Object);
 console.log(csv2Json);
-var csv2Values2 = csv2DataTable.asValues();
+//var csv2Values2 = csv2DataTable.asValues();
 //console.log(csv2Values2);
 
 var object1Json = fs.readFileSync("object1.json", "utf8");
