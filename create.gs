@@ -1,20 +1,15 @@
-function factory_(valuesOrObject){
-  this.hierValues = undefined;
-  this.hierHeader = undefined;
-  this.leafValues = undefined;
-  this.leafHeader = undefined;
-  this.asObject       = require("./v2o.js").asObject_;
-  this.toObject       = require("./v2o.js").toObject_;
-  this.toValues       = require("./o2v.js").toValues_;
-  this.asValues       = require("./o2v.js").asValues_;
-  this.headerIndices  = require("./o2v.js").headerIndices_;
-  this.a              = require("./o2v.js").a_;
-  this.b              = require("./o2v.js").b_;
-  this.fromValues     = fromValues_;
-  this.fromObject     = fromObject_;
+function factory_(){
+  this.hierValues   = undefined;
+  this.hierHeader   = undefined;
+  this.leafValues   = undefined;
+  this.leafHeader   = undefined;
+  this.getAsObject  = require("./v2o.js").getAsObject_;
+  this.getAsValues  = require("./o2v.js").getAsValues_;
+  this.setValues    = setValues_;
+  this.setObject    = setObject_;
 }
 
-function fromValues_(values){
+function setValues_(values){
   this.object = undefined;
   this.hierValues = [];
   this.leafValues = [];
@@ -31,7 +26,7 @@ function fromValues_(values){
   }
 }//method fromValues
 
-function fromObject_(object) {
+function setObject_(object) {
   this.hierValues = undefined;
   this.leafValues = undefined;
   this.hierHeader = undefined;
@@ -44,12 +39,12 @@ function fromObject_(object) {
  @param {any[][]} values
  @return {DataTableInstance}
  */
-function create(values){
-  var instance = new factory_(values);
-  if(values instanceof Array) {
-    instance.fromValues(values);
-  } else if(values instanceof Object) {
-    instance.fromObject(values);
+function create(valuesOrObject){
+  var instance = new factory_();
+  if(valuesOrObject instanceof Array) {
+    instance.setValues(valuesOrObject);
+  } else if(valuesOrObject instanceof Object) {
+    instance.setObject(valuesOrObject);
   }
   return instance;
 }
