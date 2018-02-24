@@ -2,7 +2,10 @@
 var fs = require("fs");
 var CsvParser = require("../../csvParser/CsvParser.js");
 var DataTable = require("../DataTable.js");
-CsvParser.csvDocument("abc");
+
+function test1(){
+  CsvParser.csvDocument("abc");
+}
 
 function test2(){
   var csv1 = fs.readFileSync("./test1.csv", "utf8");
