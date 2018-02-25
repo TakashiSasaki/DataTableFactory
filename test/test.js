@@ -3,10 +3,6 @@ var fs = require("fs");
 var CsvParser = require("../../csvParser/CsvParser.js");
 var DataTable = require("../DataTable.js");
 
-function test1(){
-  CsvParser.csvDocument("abc");
-}
-
 function test2(){
   var csv1 = fs.readFileSync("./test1.csv", "utf8");
   var csv1Values = CsvParser.csvDocument(csv1);
@@ -48,7 +44,6 @@ testAll.title="Run all tests";
 
 testAll();
 
-exports.test1 = test1;
 exports.test2 = test2;
 
 

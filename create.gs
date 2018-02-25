@@ -3,8 +3,8 @@ function factory_(){
   this.hierHeader   = undefined;
   this.leafValues   = undefined;
   this.leafHeader   = undefined;
-  this.getAsObject  = require("./v2o.js").getAsObject_;
-  this.getAsValues  = require("./o2v.js").getAsValues_;
+  this.getAsObject  = require("./getAsObject.js").getAsObject_;
+  this.getAsValues  = require("./getAsValues.js").getAsValues_;
   this.setValues    = setValues_;
   this.setObject    = setObject_;
 }
