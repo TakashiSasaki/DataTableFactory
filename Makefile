@@ -13,9 +13,14 @@ clean:
 	make -C test clean
 
 prepare:
-	sudo npm install -g mocha
+	sudo npm install -g mocha typings mocha espower-typescript  ;\
+	typings install dt~mocha --global --save ;\
+	typings install power-assert --global -save 
 
 mocha:
 	mocha
+
+package.json:
+	npm init
 
 
